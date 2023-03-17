@@ -33,19 +33,19 @@ namespace Pizzas.API.Models{
         }
 
         public static int Insert(Pizza pizza) {
-            string  sqlQuery;
-            int     intRowsAffected = 0;
+            string sqlQuery;
+            int intRowsAffected = 0;
                 
             sqlQuery  = "INSERT INTO Pizzas (";
-            sqlQuery += "   Nombre  , LibreGluten   , Importe   , Descripcion";
+            sqlQuery += "Nombre, LibreGluten, Importe, Descripcion";
             sqlQuery += ") VALUES (";
-            sqlQuery += "   @nombre , @libreGluten  , @importe  , @descripcion";
+            sqlQuery += "@nombre, @libreGluten, @importe, @descripcion";
             sqlQuery += ")";
             using (SqlConnection db = new SqlConnection(CONNECTION_STRING)) {
                 intRowsAffected = db.Execute(sqlQuery, new {  
-                        nombre      = pizza.Nombre, 
+                        nombre = pizza.Nombre, 
                         libreGluten = pizza.LibreGluten, 
-                        importe     = pizza.Importe,
+                        importe = pizza.Importe,
                         descripcion = pizza.Descripcion 
                     }
                 );
