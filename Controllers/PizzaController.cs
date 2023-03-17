@@ -9,12 +9,12 @@ namespace Pizzas.API.Controllers {
     public class PizzasController : ControllerBase {
         [HttpGet]
         public IActionResult GetAll() {
-            IActionResult respuesta;
-            List<Pizza> entityList;
+            IActionResult response = null;
+            List<Pizza> listaPizza;
 
-            entityList = BD.GetAll();
-            respuesta = Ok(entityList);
-            return respuesta;
+            listaPizza = BD.GetAll();
+            response = Ok(listaPizza);
+            return response;
         }
 
         [HttpGet("{id}")]
