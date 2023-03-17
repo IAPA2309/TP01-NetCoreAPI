@@ -9,55 +9,50 @@ namespace Pizzas.API.Models{
         private static string _connectionString = "Server=A-PHZ2-AMI-009;DataBase=DAI-Pizzas;Trusted_Connection=True;";
 
         public static List<Pizza> GetAll() {
-            string sqlQuery;
-            List<Pizza> returnList;
-            returnList = new List<Pizza>();
+            string SQL = "SELECT Id, Nombre, LibreGluten, Importe, Descripcion FROM Pizzas";
+            List<Pizza> returnList = new List<Pizza>();
+            
             using (SqlConnection db = new SqlConnection(_connectionString)) {
-              sqlQuery = "SELECT Id, Nombre, LibreGluten, Importe, Descripcion FROM Pizzas";
-              returnList = db.Query<Pizza>(sqlQuery).ToList();
+              returnList = db.Query<Pizza>(SQL).ToList();
             }
             return returnList;
         }
 
         public static Pizza GetById(int id) {
-            string sqlQuery;
             Pizza pizza = null;
+            string SQL = "SELECT Id, Nombre, LibreGluten, Importe, Descripcion FROM Pizzas WHERE Id = @idPizza";
 
-            sqlQuery = "SELECT Id, Nombre, LibreGluten, Importe, Descripcion FROM Pizzas WHERE Id = @idPizza";
             using (SqlConnection db = new SqlConnection(_connectionString)) {
-                pizza = db.QueryFirstOrDefault<Pizza>(sqlQuery, new { idPizza = id });
+                pizza = db.QueryFirstOrDefault<Pizza>(SQL, new { idPizza = id });
             }
             return pizza;
         }
 
         public static int Insert(Pizza pizza) {
-            string sqlQuery;
             int intRowsAffected = 0;
+            string SQL = "INSERT INTO Pizzas (Nombre, LibreGluten, Importe, Descripcion) VALUES (@nombre, @libreGluten, @importe, @descripcion)";
                 
-            sqlQuery  = "INSERT INTO Pizzas (Nombre, LibreGluten, Importe, Descripcion) VALUES (@nombre, @libreGluten, @importe, @descripcion)";
             using (SqlConnection db = new SqlConnection(_connectionString)) {
-                intRowsAffected = db.Execute(sqlQuery, new {  nombre = pizza.Nombre, libreGluten = pizza.LibreGluten, importe = pizza.Importe,descripcion = pizza.Descripcion });
+                intRowsAffected = db.Execute(SQL, new {  nombre = pizza.Nombre, libreGluten = pizza.LibreGluten, importe = pizza.Importe,descripcion = pizza.Descripcion });
             }
             return intRowsAffected;
         }
 
         public static int UpdateById(Pizza pizza) {
-            string sqlQuery;
             int intRowsAffected = 0;
+            string SQL = "UPDATE Pizzas SET Nombre = @nombre, LibreGluten = @libreGluten, Importe = @importe, Descripcion = @descripcion WHERE Id = @idPizza";
 
-            sqlQuery = "UPDATE Pizzas SET Nombre = @nombre, LibreGluten = @libreGluten, Importe = @importe, Descripcion = @descripcion WHERE Id = @idPizza";
             using (var db = new SqlConnection(_connectionString)) {
-                intRowsAffected = db.Execute(sqlQuery, new { idPizza = pizza.Id, nombre = pizza.Nombre, libreGluten = pizza.LibreGluten, importe = pizza.Importe, descripcion = pizza.Descripcion });
+                intRowsAffected = db.Execute(SQL, new { idPizza = pizza.Id, nombre = pizza.Nombre, libreGluten = pizza.LibreGluten, importe = pizza.Importe, descripcion = pizza.Descripcion });
             }
             return intRowsAffected;
         }
         public static int DeleteById(int id) {
-            string sqlQuery;
             int intRowsAffected = 0;
+            string SQL = "DELETE FROM Pizzas WHERE Id = @idPizza";
             
-            sqlQuery = "DELETE FROM Pizzas WHERE Id = @idPizza";
             using (SqlConnection db = new SqlConnection(_connectionString)) {
-                intRowsAffected = db.Execute(sqlQuery, new { idPizza = id });
+                intRowsAffected = db.Execute(SQL, new { idPizza = id });
             }
             return intRowsAffected;
         }
