@@ -6,7 +6,7 @@ using Pizzas.API.Models;
 
 namespace Pizzas.API.Models{
     public static class BD {
-        private static string CONNECTION_STRING = "Persist Security Info=False;User ID=Pizzas;password=VivaLaMuzza123;Initial Catalog=DAI-Pizzas;Data Source=.;";
+        private static string CONNECTION_STRING = "Server=A-PHZ2-AMI-009;DataBase=DAI-Pizzas;Trusted_Connection=True;";
 
         public static List<Pizza> GetAll() {
             string sqlQuery;
